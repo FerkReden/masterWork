@@ -1,7 +1,12 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { StudentModule } from './student/student.module';
+import {
+  AuthModule,
+  GroupModule,
+  MailModule,
+  StudentModule,
+  UserModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -17,6 +22,10 @@ import { StudentModule } from './student/student.module';
       autoLoadEntities: true,
     }),
     StudentModule,
+    GroupModule,
+    AuthModule,
+    UserModule,
+    MailModule,
   ],
 })
 export class AppModule {}
