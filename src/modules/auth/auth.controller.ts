@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators';
-import { CreateUserDto } from '../user/dtos/createUser.dto';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { RefreshTokenDto, TokenDto } from './dtos';
-import { LoginUserDto } from '../user/dtos/loginUser.dto';
+import { LoginUserDto } from '../user/dtos/login-user.dto';
 import { User } from '../user';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';

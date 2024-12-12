@@ -3,8 +3,9 @@ import { User } from 'src/modules/user';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
-  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -12,15 +13,19 @@ import {
 @Entity()
 export class Group {
   @PrimaryGeneratedColumn()
-  GroupId: number;
+  groupId: number;
 
   @Column()
   groupName: string;
 
+  @Column()
+  userId: number;
+
   @OneToMany(() => Student, (student) => student.group)
   students: Student[];
 
-  @ManyToMany(() => User, (user) => user.groups)
+  @ManyToOne(() => User, (user) => user.groups)
   @JoinTable()
-  users: User[];
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

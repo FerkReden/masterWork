@@ -8,11 +8,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../user/dtos/createUser.dto';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
 import { TokenDto } from './dtos';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { LoginUserDto } from '../user/dtos/loginUser.dto';
+import { LoginUserDto } from '../user/dtos/login-user.dto';
 import { UserDto } from '../user/dtos/user.dto';
 import { MailService } from '../mail/mail.service';
 

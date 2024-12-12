@@ -3,7 +3,7 @@ import {
   Column,
   Entity,
   JoinTable,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -24,7 +24,7 @@ export class User {
   @Column()
   password: string;
 
-  @ManyToMany(() => Group, (group) => group.users)
+  @OneToMany(() => Group, (group) => group.user)
   @JoinTable()
   groups: Group[];
 }

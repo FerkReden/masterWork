@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities';
@@ -11,41 +15,56 @@ export class UserService {
   ) {}
 
   async getAll() {
-    const users = await this.userRepository.find();
+    try {
+      const users = await this.userRepository.find();
 
-    if (!users) {
-      throw new NotFoundException('Users is missing');
+      if (!users) {
+        throw new NotFoundException('Users is missing');
+      }
+      return users;
+    } catch (e) {
+      throw new BadRequestException('Iternal server error', e);
     }
-    return users;
   }
 
-  async getUserById(id: number) {
-    const user = await this.userRepository.findOne({ where: { id } });
+  async getById(id: number) {
+    try {
+      const user = await this.userRepository.findOne({ where: { id } });
 
-    if (!user) {
-      throw new NotFoundException('Couldn`t find the user');
+      if (!user) {
+        throw new NotFoundException('Couldn`t find the user');
+      }
+      return user;
+    } catch (e) {
+      throw new BadRequestException('Iternal server error', e);
     }
-    return user;
   }
 
-  async updateUserById(id: number, updateData: Partial<User>): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+  async updateById(id: number, updateData: Partial<User>): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne({ where: { id } });
 
-    if (!user) {
-      throw new NotFoundException('Couldn`t find the user');
+      if (!user) {
+        throw new NotFoundException('Couldn`t find the user');
+      }
+
+      const updatedUser = this.userRepository.merge(user, updateData);
+      return await this.userRepository.save(updatedUser);
+    } catch (e) {
+      throw new BadRequestException('Iternal server error', e);
     }
-
-    const updatedUser = this.userRepository.merge(user, updateData);
-    return await this.userRepository.save(updatedUser);
   }
 
   async deleteById(id: number) {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new NotFoundException('Couldn`t find the user');
-    }
+    try {
+      const user = await this.userRepository.findOne({ where: { id } });
+      if (!user) {
+        throw new NotFoundException('Couldn`t find the user');
+      }
 
-    await this.userRepository.remove(user);
-    return user;
+      await this.userRepository.remove(user);
+    } catch (e) {
+      throw new BadRequestException('Iternal server error', e);
+    }
   }
 }

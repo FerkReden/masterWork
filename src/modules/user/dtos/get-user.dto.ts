@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsEmail } from 'class-validator';
+import { Group } from 'src/modules/group';
 
-export class UserDto {
+export class GetUserDto {
   @IsNotEmpty()
   id: number;
 
@@ -13,4 +14,7 @@ export class UserDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsNotEmpty()
+  groups: Group[];
 }
